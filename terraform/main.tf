@@ -18,7 +18,7 @@ resource "aws_launch_configuration" "example" {
   security_groups = [aws_security_group.instance.id]
   user_data       = <<-EOF
     #!/bin/bash
-    echo "Гриша, накружи МОНАКО" > index.html
+    echo "HELPDESK APPFLAME BEST OF THE BEST" > index.html
     nohup busybox httpd -f -p ${var.server_port} &
     EOF
   #tags = var.tags
@@ -117,4 +117,14 @@ resource "aws_lb_listener_rule" "asg" {
     type             = "forward"
     target_group_arn = aws_lb_target_group.asg.arn
   }
+}
+
+terraform {
+backend "s3" {
+bucket = "ydvbucket"
+key = "global/s3/terraform.tfstate"
+region = "us-east-2"
+dynamodb_table = "terraform-up-and-runninglocks"
+encrypt = true
+}
 }
